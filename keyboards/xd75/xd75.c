@@ -30,6 +30,7 @@ void matrix_init_kb(void) {
 	keycaps_led_init();
 
 	matrix_init_user();
+        led_init_ports();
 }
 
 void matrix_scan_kb(void) {
@@ -37,6 +38,16 @@ void matrix_scan_kb(void) {
 	// runs every cycle (a lot)
 
 	matrix_scan_user();
+}
+
+void led_init_ports(void) {
+    // Set our LED pins as output
+    // Caps Lock PB2
+    DDRB  |= (1 << PB2);
+    PORTB |= (1 << PB2);
+    // Others ???
+    DDRF  |= (1 << PF7) | (1 << PF6) | (1 << PF5);
+    PORTF |= (1 << PF7) | (1 << PF6) | (1 << PF5);
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
