@@ -15,6 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "wait.h"
 
 #define KN_PSCR LSFT(LCMD(KC_3))
 #define KN_CHAR LCTL(LCMD(KC_SPC))
@@ -40,27 +41,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+void insert_xcode_snippet(keyrecord_t *record, char *snippet_name) {
+    if (record->event.pressed) {
+        send_string(snippet_name);
+        wait_ms(600);
+        SEND_STRING(SS_TAP(X_ENTER));
+    }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     case SWE_01:
-        if (record->event.pressed) {
-            SEND_STRING("Hej allihopa");
-        }
+        // CustomStringConvertible
+        insert_xcode_snippet(record, "xcsc");
         break;
     case SWE_02:
-        if (record->event.pressed) {
-            SEND_STRING("Jag 'lskar kanelbullar!");
-        }
+        // Equatable
+        insert_xcode_snippet(record, "xeq");
         break;
     case SWE_03:
-        if (record->event.pressed) {
-            SEND_STRING("IKEA");
-        }
+        // Hashable
+        insert_xcode_snippet(record, "xha");
         break;
     case SWE_04:
-        if (record->event.pressed) {
-            SEND_STRING("Sk[l!");
-        }
+        // Codable
+        insert_xcode_snippet(record, "xcoda");
         break;
     case SWE_05:
         if (record->event.pressed) {
